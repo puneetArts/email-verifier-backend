@@ -2,13 +2,15 @@
 import pkg from "pg";
 const { Pool } = pkg;
 
-const isProduction = !!process.env.DATABASE_URL;
+if (!process.env.DATABASE_URL && process.env.NODE_ENV === "production") {
+  console.error("❌ DATABASE_URL is missing in production");
+}
 
 export const pool = new Pool(
-  isProduction
+  process.env.DATABASE_URL
     ? {
         connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }, // REQUIRED for Supabase
+        ssl: { rejectUnauthorized: false },
       }
     : {
         user: process.env.DB_USER,
@@ -19,10 +21,9 @@ export const pool = new Pool(
       }
 );
 
-// Optional: log once to confirm
 pool.on("connect", () => {
   console.log(
-    isProduction
+    process.env.DATABASE_URL
       ? "✅ Connected to Supabase (Production DB)"
       : "✅ Connected to Local PostgreSQL"
   );
