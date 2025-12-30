@@ -11,11 +11,19 @@ import { pool } from "./config/db.js"; // use centralized pool
 dotenv.config();
 
 const app = express();
-app.use(cors({
-  origin: "https://email-verifier-silk.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+import cors from "cors";
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://email-verifier-silk.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
+
 app.use(express.json());
 
 // Test DB connection on startup
