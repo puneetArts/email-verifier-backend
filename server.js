@@ -11,8 +11,6 @@ import { pool } from "./config/db.js"; // use centralized pool
 dotenv.config();
 
 const app = express();
-import cors from "cors";
-
 app.use(
   cors({
     origin: [
