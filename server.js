@@ -6,7 +6,7 @@ import cors from "cors";
 import emailRoutes from "./routes/emailRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { pool } from "./config/db.js"; // use centralized pool
-
+import profileRoutes from "./routes/profile.js";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ pool.connect()
 
 app.use("/api/email", emailRoutes);
 app.use("/api/auth", authRoutes);
-
+app.use("/api/profile", profileRoutes);
 app.get("/", (req, res) => {
   res.send("Server is running...");
 });
